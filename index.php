@@ -168,98 +168,40 @@ include 'include/header.php';
   </div>
 </div>
 
-
-
-<div class="car-section">
-  <h2>upcomming Cars </h2>
- 
-
-  <div id="SUV" class="cars-container">
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 5, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Mahindra XUV 7XO">
-      <div class="car-name">Mahindra XUV 7XO</div>
-      <div class="car-price">₹13.66 - 24.92 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Sierra">
-      <div class="car-name">Tata Sierra</div>
-      <div class="car-price">₹11.49 - 21.29 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 2, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Kia Seltos">
-      <div class="car-name">Kia Seltos</div>
-      <div class="car-price">₹10.99 - 19.99 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Punch">
-      <div class="car-name">Tata Punch</div>
-      <div class="car-price">₹5.50 - 9.30 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-  </div>
-
-  <div style="margin-top: 15px;">
-    <a href="#" style="color: #ff5722; font-weight: bold;">View All Sedan Cars →</a>
-  </div>
-</div>
-
-
-<div class="car-section">
-  <h2>Lastest Cars </h2>
- 
-
-  <div id="SUV" class="cars-container">
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 5, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Mahindra XUV 7XO">
-      <div class="car-name">Mahindra XUV 7XO</div>
-      <div class="car-price">₹13.66 - 24.92 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Sierra">
-      <div class="car-name">Tata Sierra</div>
-      <div class="car-price">₹11.49 - 21.29 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 2, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Kia Seltos">
-      <div class="car-name">Kia Seltos</div>
-      <div class="car-price">₹10.99 - 19.99 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Punch">
-      <div class="car-name">Tata Punch</div>
-      <div class="car-price">₹5.50 - 9.30 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-  </div>
-
-  <div style="margin-top: 15px;">
-    <a href="#" style="color: #ff5722; font-weight: bold;">View All Sedan Cars →</a>
-  </div>
-</div>
-
-
-
-
-
 </section>
 
+<section>
 
+<div class="form-container">
+    <h2>Customer Information</h2>
+
+    <form action="submit.php" method="post">
+
+        <div class="form-group">
+            <label>Name</label>
+            <input type="text" name="name" placeholder="Enter your name" required>
+        </div>
+
+        <div class="form-group">
+            <label>Phone Number</label>
+            <input type="tel" name="phone" placeholder="Enter phone number" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email ID</label>
+            <input type="email" name="email" placeholder="Enter email address" required>
+        </div>
+
+        <div class="form-group">
+            <label>Address</label>
+            <textarea name="address" rows="3" placeholder="Enter your full address" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">Submit</button>
+
+    </form>
+
+</section>
 <section>
   <div class="container">
     <h2>Get trusted used cars nearby</h2>
