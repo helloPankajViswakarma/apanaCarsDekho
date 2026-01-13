@@ -68,18 +68,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             z-index: -1;
         }
 
-        .box {
-            width: 320px;
-            padding: 30px;
-            background: white;
-            border-radius: 10px;
-            border-top: 4px solid #ff5722;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
+     .box {
+    width: 320px;
+    padding: 30px;
+    background: white;
+    border-radius: 10px;
+    border-top: 4px solid #000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
 
         h3 {
-            color: #ff5722;
+            color: #000;
             margin-bottom: 15px;
         }
 
@@ -108,7 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         button {
             width: 100%;
             padding: 12px;
-            background: #ff5722;
+            background: #000;
             color: white;
             margin-top: 20px;
             border: none;
@@ -118,7 +118,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         }
 
         button:hover {
-            background: #ff5724;
+            background: #212121;
         }
 
         .error {

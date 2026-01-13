@@ -257,7 +257,7 @@ ul {
 
 .box i {
   font-size: 35px;
-  color: #34b1a9;
+  color: #656991;
   margin-bottom: 10px;
 }
 .my-btn {
@@ -386,7 +386,7 @@ input[type="file"]::file-selector-button {
 
 /* Submit */
 .form-card input[type="submit"] {
-  background: #28a745;
+  background: #7e7e97;
   color: #fff;
   border: none;
   padding: 14px;
@@ -397,7 +397,7 @@ input[type="file"]::file-selector-button {
 }
 
 .form-card input[type="submit"]:hover {
-  background: #218838;
+  background: #7e7e97;
 }
 
 /* Testimonial Preview */
@@ -456,7 +456,7 @@ input[type="file"]::file-selector-button {
     display: flex;
     justify-content: center;
     gap: 30px;
-    padding: 20px;
+    padding: 30px;
     border-radius: 10px;
     align-items: center;
 }

@@ -80,22 +80,7 @@ if (!isset($_SESSION['admin_logged_in'])) {
       </div>
     </section>
 
-    <!-- 📊 DATA ANALYTICS GRAPHS -->
-    <section class="dashboard-boxes">
-
-      <!-- Graph Box 1 -->
-      <div class="graph-box">
-        <h5>Monthly Visits Analysis</h5>
-        <canvas id="visitsChart"></canvas>
-      </div>
-
-      <!-- Graph Box 2 -->
-      <div class="graph-box">
-        <h5>Monthly Revenue Analysis</h5>
-        <canvas id="revenueChart"></canvas>
-      </div>
-
-    </section>
+ 
 
   </main>
 </div>

@@ -30,11 +30,12 @@ $car = mysqli_fetch_assoc($result);
 </head>
 <body>
 
-<section class="car-detailes">
+<section >
+  <div class="car-detailes">
 
   <div class="left">
-    <img src="admin/uploads/<?php echo $car['image']; ?>" style="width:145px"  alt="<?php echo $car['car_name']; ?>">
-    <img src="admin/uploads/<?php echo $car['image1']; ?>" style="width: 150px" alt="<?php echo $car['car_name']; ?>">
+    <img src="admin/uploads/<?php echo $car['image']; ?>" style="width:350px"  alt="<?php echo $car['car_name']; ?>">
+    <img src="admin/uploads/<?php echo $car['image1']; ?>" style="width: 240px" alt="<?php echo $car['car_name']; ?>">
   </div>
 
   <div class="right">
@@ -56,6 +57,7 @@ $car = mysqli_fetch_assoc($result);
     <button class="offer-btn">View January Offers</button>
   </div>
 
+  </div>
 </section>
 
 <!-- SPECS -->
@@ -68,6 +70,10 @@ $car = mysqli_fetch_assoc($result);
     <div><strong>Price</strong><br>₹ <?php echo number_format($car['amount']); ?></div>
   </div>
 </section>
+
+<?php
+include "include/footer.php";
+?>
 
 </body>
 </html>

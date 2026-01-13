@@ -69,6 +69,16 @@ $result = mysqli_query($conn, $sql);
                         <input type="radio" name="budget" value="10-15" <?= ($budget == "10-15") ? "checked" : "" ?>> 10 -
                         15 Lakh
                     </li>
+                     <li>
+                        <input type="radio" name="budget" value="10-15" <?= ($budget == "15-20") ? "checked" : "" ?>> 15 -20 Lakh
+                    </li>
+                     <li>
+                        <input type="radio" name="budget" value="10-15" <?= ($budget == "20-5") ? "checked" : "" ?>> 20 -25 Lakh
+                    </li>
+
+                     <li>
+                        <input type="radio" name="budget" value="10-15" <?= ($budget == "10-15") ? "checked" : "" ?>> 25 -35 Lakh        </li>
+                    
                 </ul>
             </div>
 
@@ -115,8 +125,14 @@ $result = mysqli_query($conn, $sql);
         <div class="content">
 
             <div class="content-header">
-                <h2><?= mysqli_num_rows($result) ?> Cars Found</h2>
-
+                <div class="filter-1">
+                <h2>
+                   SUV Cars Under 20 Lakh in India 
+                </h2>
+                <p>There are 39 SUV cars under 20 Lakh currently available in India for sale at starting price Rs 15 Lakh. The Top SUV cars under 20 Lakh are Mahindra XUV 7XO (Rs. 13.66 - 24.92 Lakh), Tata Sierra (Rs. 11.49 - 21.29 Lakh), Kia Seltos (Rs. 10.99 - 19.99 Lakh). To know more about the latest prices and offers of SUV in your city, specifications, pictures, mileage, reviews and other details, please select your desired car model from the list below.</p>
+               </div>
+                <!-- <h2><?= mysqli_num_rows($result) ?> Cars Found</h2> -->
+               <div class="filter-1">
                 <form method="GET">
                     <select name="sort" onchange="this.form.submit()">
                         <option value="">Sort by</option>
@@ -124,6 +140,7 @@ $result = mysqli_query($conn, $sql);
                         <option value="high" <?= $sort == "high" ? "selected" : "" ?>>Price High to Low</option>
                     </select>
                 </form>
+                </div>
             </div>
 
             <!-- CAR CARDS -->
@@ -131,7 +148,7 @@ $result = mysqli_query($conn, $sql);
                 <div class="car-cards">
 
                     <!-- <img src="admin/uploads/<?= $row['image']  ?> style='width:50px; heigth:500px'  "> -->
-<img src="admin/uploads/<?= $row['image']; ?>" style="width:280px; height:380px;">
+<img src="admin/uploads/<?= $row['image']; ?>" style="width:340px; height:340px;">
 
                     <div class="car-info">
                         <h3><?= $row['car_name'] ?></h3>
