@@ -138,7 +138,7 @@ body.dashboard-page {
 /* Sidebar */
 .sidebar {
     width: 295px;
-    background: #34b1a9;
+    background: #656991;
     box-shadow: 2px 5px 3px 2px #554141;
     padding: 20px;
     color: #fff;
@@ -225,7 +225,7 @@ ul {
 }
 
 .topbar .user-info {
-  color: #34b1a9;
+  color: #656991;
   font-weight: 600;
   margin-right: 15px;
 }
@@ -337,7 +337,7 @@ ul {
 .form-card input:focus,
 .form-card textarea:focus,
 .form-card select:focus {
-  border-color: #4a00e0;
+  border-color:#656991;
   background: #fff;
 }
 

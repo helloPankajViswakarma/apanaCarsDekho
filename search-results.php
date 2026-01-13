@@ -1,124 +1,161 @@
-<?php 
+<?php
 include "include/header.php";
+include "db.php";
+
+/* -------- FILTER VALUES -------- */
+$brands = $_GET['brand'] ?? [];
+$budget = $_GET['budget'] ?? '';
+$vehicle_type = $_GET['vehicle_type'] ?? [];
+$transmission = $_GET['transmission'] ?? [];
+$sort = $_GET['sort'] ?? '';
+
+/* -------- QUERY -------- */
+$sql = "SELECT * FROM cars WHERE 1";
+
+/* Budget Filter */
+if ($budget == "10-15") {
+    $sql .= " AND amount BETWEEN 1000000 AND 1500000";
+}
+
+/* Brand Filter */
+if (!empty($brands)) {
+    $brandList = "'" . implode("','", $brands) . "'";
+    $sql .= " AND brand IN ($brandList)";
+}
+
+/* Vehicle Type */
+if (!empty($vehicle_type)) {
+    $typeList = "'" . implode("','", $vehicle_type) . "'";
+    $sql .= " AND vehicle_type IN ($typeList)";
+}
+
+/* Transmission */
+if (!empty($transmission)) {
+    $transList = "'" . implode("','", $transmission) . "'";
+    $sql .= " AND transmission IN ($transList)";
+}
+
+/* Sorting */
+if ($sort == "low") {
+    $sql .= " ORDER BY amount ASC";
+} elseif ($sort == "high") {
+    $sql .= " ORDER BY amount DESC";
+} else {
+    $sql .= " ORDER BY created_at DESC";
+}
+
+$result = mysqli_query($conn, $sql);
 ?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html>
+
 <head>
-<meta charset="UTF-8">
-<title>SUV Cars Under 15 Lakh</title>
-<link rel="stylesheet" href="assets/css/style.css">
+    <title>SUV Cars Under 15 Lakh</title>
+    <link rel="stylesheet" href="assets/css/style.css">
 </head>
+
 <body>
 
-<div class="containers">
+    <div class="containers">
 
-    <!-- LEFT FILTER -->
-    <aside class="filter">
-        <div class="filter-1">
-        <h3>Budget</h3>
+        <!-- FILTER -->
+        <form method="GET" class="filter">
 
-        <div class="budget-range">
-            ₹ 10 Lakh - 15 Lakh
+            <div class="filter-1">
+                <h3>Budget</h3>
+                <ul>
+                    <li>
+                        <input type="radio" name="budget" value="10-15" <?= ($budget == "10-15") ? "checked" : "" ?>> 10 -
+                        15 Lakh
+                    </li>
+                </ul>
+            </div>
+
+            <hr>
+
+            <div class="filter-1">
+                <h3>Brand</h3>
+                <?php
+                $brandList = ["Tata", "Mahindra", "Maruti", "Kia", "Hyundai"];
+                foreach ($brandList as $b) {
+                    ?>
+                    <li>
+                        <input type="checkbox" name="brand[]" value="<?= $b ?>" <?= in_array($b, $brands) ? "checked" : "" ?>>
+                        <?= $b ?>
+                    </li>
+                <?php } ?>
+            </div>
+
+            <div class="filter-1">
+                <h3>Vehicle Type</h3>
+                <?php foreach (["SUV", "Sedan", "Hatchback"] as $v) { ?>
+                    <li>
+                        <input type="checkbox" name="vehicle_type[]" value="<?= $v ?>" <?= in_array($v, $vehicle_type) ? "checked" : "" ?>>
+                        <?= $v ?>
+                    </li>
+                <?php } ?>
+            </div>
+
+            <div class="filter-1">
+                <h3>Model Type</h3>
+                <?php foreach (["Manual", "Automatic", "AMT"] as $t) { ?>
+                    <li>
+                        <input type="checkbox" name="transmission[]" value="<?= $t ?>" <?= in_array($t, $transmission) ? "checked" : "" ?>>
+                        <?= $t ?>
+                    </li>
+                <?php } ?>
+            </div>
+
+            <button type="submit" class="offer-btn">Apply Filter</button>
+
+        </form>
+
+        <!-- CONTENT -->
+        <div class="content">
+
+            <div class="content-header">
+                <h2><?= mysqli_num_rows($result) ?> Cars Found</h2>
+
+                <form method="GET">
+                    <select name="sort" onchange="this.form.submit()">
+                        <option value="">Sort by</option>
+                        <option value="low" <?= $sort == "low" ? "selected" : "" ?>>Price Low to High</option>
+                        <option value="high" <?= $sort == "high" ? "selected" : "" ?>>Price High to Low</option>
+                    </select>
+                </form>
+            </div>
+
+            <!-- CAR CARDS -->
+            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+                <div class="car-cards">
+
+                    <!-- <img src="admin/uploads/<?= $row['image']  ?> style='width:50px; heigth:500px'  "> -->
+<img src="admin/uploads/<?= $row['image']; ?>" style="width:280px; height:380px;">
+
+                    <div class="car-info">
+                        <h3><?= $row['car_name'] ?></h3>
+
+                        <p class="rating">⭐ <?= $row['rating'] ?></p>
+
+                        <p class="price">₹<?= number_format($row['amount']) ?>*</p>
+
+                        <p class="specs">
+                            <?= $row['vehicle_type'] ?> • <?= $row['transmission'] ?>
+                        </p>
+
+                        <a href="cars-details.php?id=<?= $row['id'] ?>">
+                            <button class="offer-btn">View Offers</button>
+                        </a>
+                    </div>
+
+                </div>
+            <?php } ?>
+
         </div>
-
-        <ul class="filter-list">
-            <li><input type="checkbox"> 5 - 10 Lakh (21)</li>
-            <li><input type="checkbox" checked> 10 - 15 Lakh (41)</li>
-            <li><input type="checkbox"> 15 - 20 Lakh (39)</li>
-            <li><input type="checkbox"> 20 - 35 Lakh (25)</li>
-            <li><input type="checkbox"> 35 - 50 Lakh (18)</li>
-        </ul>
-          
-        </div>
-        <hr>
-           <div class="filter-1">
-        <h3>Brand</h3>
-        <input type="text" placeholder="e.g. Maruti" class="search-box">
-
-        <ul class="filter-list">
-            <li><input type="checkbox"> Maruti (5)</li>
-            <li><input type="checkbox"> Tata (7)</li>
-            <li><input type="checkbox"> Hyundai (6)</li>
-            <li><input type="checkbox"> Mahindra (9)</li>
-        </ul>
-
-        </div>
-        <div class="filter-1">
-        <h3>Vehical type </h3>
-        <input type="text" placeholder="e.g. Maruti" class="search-box">
-
-        <ul class="filter-list">
-            <li><input type="checkbox"> Maruti (5)</li>
-            <li><input type="checkbox"> Tata (7)</li>
-            <li><input type="checkbox"> Hyundai (6)</li>
-            <li><input type="checkbox"> Mahindra (9)</li>
-        </ul>
-     </div>
-     <div class="filter-1">
-        <h3>Model Type </h3> 
-      <input type="text" placeholder="e.g. Maruti" class="search-box">
-
-        <ul class="filter-list">
-            <li><input type="checkbox"> Maruti (5)</li>
-            <li><input type="checkbox"> Tata (7)</li>
-            <li><input type="checkbox"> Hyundai (6)</li>
-            <li><input type="checkbox"> Mahindra (9)</li>
-        </ul>
     </div>
-    <div class="filter-1">
-        <h3>Vehical type </h3>
-        <input type="text" placeholder="e.g. Maruti" class="search-box">
 
-        <ul class="filter-list">
-            <li><input type="checkbox"> Maruti (5)</li>
-            <li><input type="checkbox"> Tata (7)</li>
-            <li><input type="checkbox"> Hyundai (6)</li>
-            <li><input type="checkbox"> Mahindra (9)</li>
-        </ul>
-        </div>
-
-    </aside>
-
-    <!-- RIGHT CONTENT -->
-    <main class="content">
-
-        <div class="content-header">
-            <div class="content-para">
-            <h2>41 SUV Cars Under 15 Lakh</h2>
-            <p>This This This This This This This This This This This This This This This This This This This This This This This This </p>
-            This This This This This This This This This This This This This This This This This This This This This 
-            This vvv
-            </div>
-
-            <select class="sort">
-                <option>Sort by</option>
-                <option>Price Low to High</option>
-                <option>Price High to Low</option>
-            </select>
-        </div>
-
-        <!-- CARD -->
-        <div class="car-cards">
-            <img src="assets/images/suv-1.avif" alt="car">
-
-            <div class="car-info">
-                <h3>Mahindra XUV 7XO</h3>
-
-                <p class="rating">⭐ 4.6 | 14 Reviews</p>
-
-                <p class="price">₹13.66 - 24.92 Lakh*</p>
-                
-                <p class="specs">17 kmpl • 2184 cc • 7 Seater</p>
-
-                <button class="offer-btn">View January Offers</button>
-            </div>
-        </div>
-
-    </main>
-
-</div>
-<?php 
-include "include/footer.php";
-?>
+    <?php include "include/footer.php"; ?>
 </body>
+
 </html>

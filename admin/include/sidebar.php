@@ -33,7 +33,7 @@
 
             </ul>
         </li>
-        <li class="submenu">
+        <!-- <li class="submenu">
             <a href="#"><i class="fa-solid fa-gear"></i>Most Searched Car <i
                     class="fa-solid fa-caret-down arrow"></i></a>
             <ul class="submenu-items">
@@ -43,7 +43,7 @@
                 ">Edit-Cars </a></li>
 
             </ul>
-        </li>
+        </li> -->
 
         <li><a href="view-contact-users.php"><i class="fa-solid fa-users"></i> My Users</a></li>
         <li><a href="change_credentials.php"><i class="fa-solid fa-wrench"></i> Settings</a></li>

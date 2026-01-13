@@ -44,11 +44,11 @@
 
 
     <ul class="sub-menu">
-      <li><a href="https://www.holy-mission.com" target="_blank">Visit Site</a></li>
+      <li><a href="http://localhost/apanaCarsDekho/" target="_blank">Visit Site</a></li>
     </ul>
 
-    <i class="fa-solid fa-arrow-right-from-bracket" style="color: #34b1a9; margin-left:10px"></i>
-    <span><a href="logout.php" style="color:#34b1a9;  text-decoration:none;">Logout</a></span>
+    <i class="fa-solid fa-arrow-right-from-bracket" style="color: #656991; margin-left:10px"></i>
+    <span><a href="logout.php" style="color:#656991;  text-decoration:none;">Logout</a></span>
   </div>
 </div>
 

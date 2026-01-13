@@ -2,21 +2,17 @@
 include 'include/header.php';
 ?>
 <section class="hero">
-  <div class="hero-grid">
+  <div class="main-container">
+
+
 
 
     <div class="search-card">
-
       <h2>Find your right car</h2>
-
-
       <div class="toggle">
         <button class="toggle-btn active" onclick="toggleType(this)">New Car</button>
         <button class="toggle-btn" onclick="toggleType(this)">Used Car</button>
       </div>
-
-
-
       <div class="radio-group">
         <label>
           <input type="radio" name="filter" id="byBudget" checked onclick="showByBudget()">
@@ -27,42 +23,39 @@ include 'include/header.php';
           By Brand
         </label>
       </div>
-
-
-
-      <select id="budget">
-        <option>Select Budget</option>
-        <option>Below 5 Lakh</option>
-        <option>5 - 10 Lakh</option>
-        <option>10 - 15 Lakh</option>
-        <option>15 - 20 Lakh</option>
-        <option>20 - 25 Lakh</option>
+      <select id="budget" name="budget">
+        <option value="" selected disabled hidden>Select Budget</option>
+        <option value="below-5">Below 5 Lakh</option>
+        <option value="5-10">5 - 10 Lakh</option>
+        <option value="10-15">10 - 15 Lakh</option>
+        <option value="15-20">15 - 20 Lakh</option>
+        <option value="20-25">20 - 25 Lakh</option>
       </select>
-      <select id="vehicleType">
+
+      <select id="vehicleType" name="vehicleType">
+        <option value="" selected disabled hidden>Select vehicleType</option>
         <option>All Vehicle Types</option>
-        <option>Sedan</option>
-        <option>SUV </option>
-        <option>MUV</option>
-        <option>Pickup Truck </option>
-        <option>Minivan </option>
-        <option>Wagon </option>
-        <option>Coupe</option>
-        <option>MUV</option>
-        <option>Luxury </option>
+        <option value="Electric ">Electric</option>
+        <option value="Diesal">Diesal</option>
+        <option value="Petrol">Petrol</option>
+        <option value="Cng">Cng</option>
       </select>
-      <select id="brand" style="display:none" onchange="loadModels()">
-        <option value="">Select Brand</option>
-        <option value="maruti">Maruti</option>
-        <option value="hyundai">Hyundai</option>
-        <option value="tata">Tata</option>
+
+      <select id="brand" style="display:none" onchange="loadModels()" name="Brand">
+        <option value="" selected disabled hidden>Select Brand</option>
+        <option value="Tata">Tata</option>
+        <option value="Mahindra">Mahindra</option>
+        <option value="Kia">Kia</option>
+        <option value="Hyundai">Hyundai</option>
       </select>
 
 
-      <select id="model" style="display:none">
-        <option>Select Model</option>
-        <option>Select Model</option>
-        <option>Select Model</option>
-        <option>Select Model</option>
+      <select id="model" style="display:none" name="Model">
+        <option value="" selected disabled hidden>Select Model</option>
+        <option>Model-1 </option>
+        <option>Model-2</option>
+        <option>Model-3</option>
+        <option>Model-4</option>
       </select>
 
       <button class="search-btn" onclick="searchCars()">Search</button>
@@ -75,6 +68,7 @@ include 'include/header.php';
       <image src="assets/images/suv-1.avif">
     </div>
 
+  </div>
   </div>
 </section>
 
@@ -234,7 +228,7 @@ include 'include/header.php';
       $result = mysqli_query($conn, $sql);
 
       while ($row = mysqli_fetch_assoc($result)) {
-      ?>
+        ?>
         <div class="car-card">
           <div class="launch-date">
             LAUNCHED ON: <?= date("M d, Y", strtotime($row['created_at'])) ?>
@@ -256,7 +250,7 @@ include 'include/header.php';
 </section>
 
 
-<section>
+<section >
   <div class="car-section">
     <h2>CNG Cars</h2>
 
@@ -272,7 +266,7 @@ include 'include/header.php';
       $result = mysqli_query($conn, $sql);
 
       while ($row = mysqli_fetch_assoc($result)) {
-      ?>
+        ?>
         <div class="car-card">
           <div class="launch-date">
             LAUNCHED ON: <?= date("M d, Y", strtotime($row['created_at'])) ?>
@@ -302,7 +296,8 @@ include 'include/header.php';
 
 
 
-<section>
+<section style="background: #f9f9f9;
+    padding: 10px 0" >
 
   <div class="form-container">
     <h2>Customer Information</h2>
@@ -339,62 +334,62 @@ include 'include/header.php';
     <h2>Get trusted used cars nearby</h2>
     <div class="cities-grid">
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Ahmedabad">
+        <img src="images/ahmedabad.svg" alt="Ahmedabad">
         <span>Used cars in</span>
         <p>Ahmedabad</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Bangalore">
+        <img src="images/ahmedabad.svg" alt="Bangalore">
         <span>Used cars in</span>
         <p>Bangalore</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Chennai">
+        <img src="images/ahmedabad.svg" alt="Chennai">
         <span>Used cars in</span>
         <p>Chennai</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Delhi NCR">
+        <img src="images/ahmedabad.svg" alt="Delhi NCR">
         <span>Used cars in</span>
         <p>Delhi NCR</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Gurgaon">
+        <img src="images/ahmedabad.svg" alt="Gurgaon">
         <span>Used cars in</span>
         <p>Gurgaon</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Hyderabad">
+        <img src="images/ahmedabad.svg" alt="Hyderabad">
         <span>Used cars in</span>
         <p>Hyderabad</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Jaipur">
+        <img src="images/ahmedabad.svg" alt="Jaipur">
         <span>Used cars in</span>
         <p>Jaipur</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Kolkata">
+        <img src="images/ahmedabad.svg" alt="Kolkata">
         <span>Used cars in</span>
         <p>Kolkata</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Mumbai">
+        <img src="images/ahmedabad.svg" alt="Mumbai">
         <span>Used cars in</span>
         <p>Mumbai</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="New Delhi">
+        <img src="images/ahmedabad.svg" alt="New Delhi">
         <span>Used cars in</span>
         <p>New Delhi</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Noida">
+        <img src="images/ahmedabad.svg" alt="Noida">
         <span>Used cars in</span>
         <p>Noida</p>
       </div>
       <div class="city-card">
-        <img src="https://img.icons8.com/ios-filled/100/0000/india.png" alt="Pune">
+        <img src="images/ahmedabad.svg" alt="Pune">
         <span>Used cars in</span>
         <p>Pune</p>
       </div>

@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         .submit {
             width: 100%;
             padding: 12px;
-            background: #34b1a9;
+            background: #656991;
             color: white;
             border-radius: 10px;
             margin-bottom: 20px;
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         button:hover {
-            background: #14b1a4;
+            background: #8f80ac;
         }
 
         .success {
