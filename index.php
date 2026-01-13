@@ -2,202 +2,334 @@
 include 'include/header.php';
 ?>
 <section class="hero">
-    <div class="hero-grid">
+  <div class="hero-grid">
 
 
-        <div class="search-card">
+    <div class="search-card">
 
-            <h2>Find your right car</h2>
+      <h2>Find your right car</h2>
 
-    
-            <div class="toggle">
-                <button class="toggle-btn active" onclick="toggleType(this)">New Car</button>
-                <button class="toggle-btn" onclick="toggleType(this)">Used Car</button>
+
+      <div class="toggle">
+        <button class="toggle-btn active" onclick="toggleType(this)">New Car</button>
+        <button class="toggle-btn" onclick="toggleType(this)">Used Car</button>
+      </div>
+
+
+
+      <div class="radio-group">
+        <label>
+          <input type="radio" name="filter" id="byBudget" checked onclick="showByBudget()">
+          By Budget
+        </label>
+        <label>
+          <input type="radio" name="filter" id="byBrand" onclick="showByBrand()">
+          By Brand
+        </label>
+      </div>
+
+
+
+      <select id="budget">
+        <option>Select Budget</option>
+        <option>Below 5 Lakh</option>
+        <option>5 - 10 Lakh</option>
+        <option>10 - 15 Lakh</option>
+        <option>15 - 20 Lakh</option>
+        <option>20 - 25 Lakh</option>
+      </select>
+      <select id="vehicleType">
+        <option>All Vehicle Types</option>
+        <option>Sedan</option>
+        <option>SUV </option>
+        <option>MUV</option>
+        <option>Pickup Truck </option>
+        <option>Minivan </option>
+        <option>Wagon </option>
+        <option>Coupe</option>
+        <option>MUV</option>
+        <option>Luxury </option>
+      </select>
+      <select id="brand" style="display:none" onchange="loadModels()">
+        <option value="">Select Brand</option>
+        <option value="maruti">Maruti</option>
+        <option value="hyundai">Hyundai</option>
+        <option value="tata">Tata</option>
+      </select>
+
+
+      <select id="model" style="display:none">
+        <option>Select Model</option>
+        <option>Select Model</option>
+        <option>Select Model</option>
+        <option>Select Model</option>
+      </select>
+
+      <button class="search-btn" onclick="searchCars()">Search</button>
+      <a href="#" class="advanced">Advanced Search →</a>
+
+    </div>
+
+
+    <div class="hero-text">
+      <image src="assets/images/suv-1.avif">
+    </div>
+
+  </div>
+</section>
+
+<section>
+  <div class="car-section">
+    <h2>The most searched cars</h2>
+
+    <div class="tabs">
+      <div class="tab active">SUV</div>
+      <div class="tab">Hatchback</div>
+      <div class="tab">Sedan</div>
+      <div class="tab">MUV</div>
+      <div class="tab">Luxury</div>
+    </div>
+
+    <?php
+    include "db.php";
+
+    $sql = "SELECT id, car_name, amount, image, created_at 
+            FROM cars 
+            ORDER BY created_at DESC 
+            LIMIT 6";
+
+    $result = mysqli_query($conn, $sql);
+    ?>
+
+    <div id="SUV" class="cars-container">
+
+      <?php if (mysqli_num_rows($result) > 0) { ?>
+        <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+
+          <div class="car-card">
+
+            <div class="launch-date">
+              LAUNCHED ON: <?= date("M d, Y", strtotime($row['created_at'])); ?>
             </div>
 
-            
-         
-            <div class="radio-group">
-    <label>
-        <input type="radio" name="filter" id="byBudget" checked onclick="showByBudget()">
-        By Budget
-    </label>
-    <label>
-        <input type="radio" name="filter" id="byBrand" onclick="showByBrand()">
-        By Brand
-    </label>
-</div>
+            <a href="cars-details.php?id=<?= $row['id']; ?>">
+              <img src="admin/uploads/<?= $row['image']; ?>" alt="<?= htmlspecialchars($row['car_name']); ?>">
+            </a>
 
+            <div class="car-name">
+              <?= htmlspecialchars($row['car_name']); ?>
+            </div>
 
-            
-            <select id="budget">
-                <option>Select Budget</option>
-                <option>Below 5 Lakh</option>
-                <option>5 - 10 Lakh</option>
-                <option>10 - 15 Lakh</option>
-                <option>15 - 20 Lakh</option>
-                <option>20 - 25 Lakh</option>
-            </select>
-           <select id="vehicleType">
-                <option>All Vehicle Types</option>
-                <option>Sedan</option>
-                <option>SUV </option>
-                <option>MUV</option>
-                <option>Pickup Truck </option>
-                <option>Minivan  </option>
-                <option>Wagon </option>
-                <option>Coupe</option>
-                <option>MUV</option>
-                <option>Luxury </option>
-            </select>
-                        <select id="brand" style="display:none" onchange="loadModels()">
-                <option value="">Select Brand</option>
-                <option value="maruti">Maruti</option>
-                <option value="hyundai">Hyundai</option>
-                <option value="tata">Tata</option>
-            </select>
+            <div class="car-price">
+              ₹<?= number_format($row['amount']); ?>*
+            </div>
 
-            
-            <select id="model" style="display:none">
-                <option>Select Model</option>
-                <option>Select Model</option>
-                <option>Select Model</option>
-                <option>Select Model</option>
-            </select>
+            <button class="offer-btn">View January Offers</button>
 
-            <button class="search-btn">Search</button>
+          </div>
 
-            <a href="#" class="advanced">Advanced Search →</a>
-
-        </div>
-
-    
-        <div class="hero-text">
-           <image src="assets/images/suv-1.avif">
-        </div>
+        <?php } ?>
+      <?php } else { ?>
+        <p>No cars found</p>
+      <?php } ?>
 
     </div>
+
+    <div style="margin-top: 15px;">
+      <a href="#" style="color:#ff5722;font-weight:bold;">
+        View All Cars →
+      </a>
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="car-section">
+    <h2>Electric Cars</h2>
+
+    <div class="cars-container">
+
+      <?php
+      $sql = "SELECT id, car_name, amount, image, created_at 
+              FROM cars 
+              WHERE fuel_type = 'Electric'
+              ORDER BY created_at DESC
+              LIMIT 6";
+
+      $result = mysqli_query($conn, $sql);
+
+      while ($row = mysqli_fetch_assoc($result)) {
+        ?>
+        <div class="car-card">
+          <div class="launch-date">
+            LAUNCHED ON: <?= date("M d, Y", strtotime($row['created_at'])) ?>
+          </div>
+
+          <a href="cars-details.php?id=<?= $row['id'] ?>">
+            <img src="admin/uploads/<?= $row['image'] ?>">
+          </a>
+
+          <div class="car-name"><?= $row['car_name'] ?></div>
+          <div class="car-price">₹<?= number_format($row['amount']) ?>*</div>
+
+          <button class="offer-btn">View Offers</button>
+        </div>
+      <?php } ?>
+
+    </div>
+  </div>
 </section>
 
 <section>
+  <div class="car-section">
+    <h2>Diesel Cars</h2>
 
-<div class="car-section">
-  <h2>The most searched cars</h2>
-  <div class="tabs">
-    <div class="tab active" onclick="showTab('SUV')">SUV</div>
-    <div class="tab" onclick="showTab('Hatchback')">Hatchback</div>
-    <div class="tab" onclick="showTab('Sedan')">Sedan</div>
-    <div class="tab" onclick="showTab('MUV')">MUV</div>
-    <div class="tab" onclick="showTab('Luxury')">Luxury</div>
-  </div>
+    <div class="cars-container">
 
-  <div id="SUV" class="cars-container">
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 5, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Mahindra XUV 7XO">
-      <div class="car-name">Mahindra XUV 7XO</div>
-      <div class="car-price">₹13.66 - 24.92 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
+      <?php
+      $sql = "SELECT id, car_name, amount, image, created_at 
+              FROM cars 
+              WHERE fuel_type = 'Diesel'
+              ORDER BY created_at DESC
+              LIMIT 6";
 
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Sierra">
-      <div class="car-name">Tata Sierra</div>
-      <div class="car-price">₹11.49 - 21.29 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
+      $result = mysqli_query($conn, $sql);
 
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 2, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Kia Seltos">
-      <div class="car-name">Kia Seltos</div>
-      <div class="car-price">₹10.99 - 19.99 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
+      while ($row = mysqli_fetch_assoc($result)) {
+        ?>
+        <div class="car-card">
+          <div class="launch-date">
+            LAUNCHED ON: <?= date("M d, Y", strtotime($row['created_at'])) ?>
+          </div>
 
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Punch">
-      <div class="car-name">Tata Punch</div>
-      <div class="car-price">₹5.50 - 9.30 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
+          <a href="cars-details.php?id=<?= $row['id'] ?>">
+            <img src="admin/uploads/<?= $row['image'] ?>">
+          </a>
+
+          <div class="car-name"><?= $row['car_name'] ?></div>
+          <div class="car-price">₹<?= number_format($row['amount']) ?>*</div>
+
+          <button class="offer-btn">View Offers</button>
+        </div>
+      <?php } ?>
+
     </div>
   </div>
-
-  <div style="margin-top: 15px;">
-    <a href="#" style="color: #ff5722; font-weight: bold;">View All Sedan Cars →</a>
-  </div>
-</div>
-
-
-<div class="car-section">
-  <h2>Electric cars</h2>
-  <div id="SUV" class="cars-container">
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 5, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Mahindra XUV 7XO">
-      <div class="car-name">Mahindra XUV 7XO</div>
-      <div class="car-price">₹13.66 - 24.92 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Sierra">
-      <div class="car-name">Tata Sierra</div>
-      <div class="car-price">₹11.49 - 21.29 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <div class="launch-date">LAUNCHED ON: JAN 2, 2026</div>
-      <img src="assets/images/suv-1.avif" alt="Kia Seltos">
-      <div class="car-name">Kia Seltos</div>
-      <div class="car-price">₹10.99 - 19.99 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-
-    <div class="car-card">
-      <img src="assets/images/suv-1.avif" alt="Tata Punch">
-      <div class="car-name">Tata Punch</div>
-      <div class="car-price">₹5.50 - 9.30 Lakh*</div>
-      <button class="offer-btn">View January Offers</button>
-    </div>
-  </div>
-
-  <div style="margin-top: 15px;">
-    <a href="#" style="color: #ff5722; font-weight: bold;">View All Sedan Cars →</a>
-  </div>
-</div>
-
 </section>
 
 <section>
+  <div class="car-section">
+    <h2>Petrol Cars</h2>
 
-<div class="form-container">
+    <div class="cars-container">
+
+      <?php
+      $sql = "SELECT id, car_name, amount, image, created_at 
+              FROM cars 
+              WHERE fuel_type = 'Petrol'
+              ORDER BY created_at DESC
+              LIMIT 6";
+
+      $result = mysqli_query($conn, $sql);
+
+      while ($row = mysqli_fetch_assoc($result)) {
+      ?>
+        <div class="car-card">
+          <div class="launch-date">
+            LAUNCHED ON: <?= date("M d, Y", strtotime($row['created_at'])) ?>
+          </div>
+
+          <a href="cars-details.php?id=<?= $row['id'] ?>">
+            <img src="admin/uploads/<?= $row['image'] ?>" alt="<?= $row['car_name'] ?>">
+          </a>
+
+          <div class="car-name"><?= $row['car_name'] ?></div>
+          <div class="car-price">₹<?= number_format($row['amount']) ?>*</div>
+
+          <button class="offer-btn">View Offers</button>
+        </div>
+      <?php } ?>
+
+    </div>
+  </div>
+</section>
+
+
+<section>
+  <div class="car-section">
+    <h2>CNG Cars</h2>
+
+    <div class="cars-container">
+
+      <?php
+      $sql = "SELECT id, car_name, amount, image, created_at 
+              FROM cars 
+              WHERE fuel_type = 'CNG'
+              ORDER BY created_at DESC
+              LIMIT 6";
+
+      $result = mysqli_query($conn, $sql);
+
+      while ($row = mysqli_fetch_assoc($result)) {
+      ?>
+        <div class="car-card">
+          <div class="launch-date">
+            LAUNCHED ON: <?= date("M d, Y", strtotime($row['created_at'])) ?>
+          </div>
+
+          <a href="cars-details.php?id=<?= $row['id'] ?>">
+            <img src="admin/uploads/<?= $row['image'] ?>" alt="<?= $row['car_name'] ?>">
+          </a>
+
+          <div class="car-name"><?= $row['car_name'] ?></div>
+          <div class="car-price">₹<?= number_format($row['amount']) ?>*</div>
+
+          <button class="offer-btn">View Offers</button>
+        </div>
+      <?php } ?>
+
+    </div>
+  </div>
+</section>
+
+
+
+
+
+
+
+
+
+
+<section>
+
+  <div class="form-container">
     <h2>Customer Information</h2>
 
     <form action="submit.php" method="post">
 
-        <div class="form-group">
-            <label>Name</label>
-            <input type="text" name="name" placeholder="Enter your name" required>
-        </div>
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" name="name" placeholder="Enter your name" required>
+      </div>
 
-        <div class="form-group">
-            <label>Phone Number</label>
-            <input type="tel" name="phone" placeholder="Enter phone number" required>
-        </div>
+      <div class="form-group">
+        <label>Phone Number</label>
+        <input type="tel" name="phone" placeholder="Enter phone number" required>
+      </div>
 
-        <div class="form-group">
-            <label>Email ID</label>
-            <input type="email" name="email" placeholder="Enter email address" required>
-        </div>
+      <div class="form-group">
+        <label>Email ID</label>
+        <input type="email" name="email" placeholder="Enter email address" required>
+      </div>
 
-        <div class="form-group">
-            <label>Address</label>
-            <textarea name="address" rows="3" placeholder="Enter your full address" required></textarea>
-        </div>
+      <div class="form-group">
+        <label>Address</label>
+        <textarea name="address" rows="3" placeholder="Enter your full address" required></textarea>
+      </div>
 
-        <button type="submit" class="submit-btn">Submit</button>
+      <button type="submit" class="submit-btn">Submit</button>
 
     </form>
 
@@ -272,6 +404,59 @@ include 'include/header.php';
 
 </section>
 
+<script>
+  let carCondition = "new";
+
+  function toggleType(btn) {
+    document.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    carCondition = btn.innerText.includes("New") ? "new" : "used";
+  }
+
+  function showByBudget() {
+    document.getElementById("budget").style.display = "block";
+    document.getElementById("vehicleType").style.display = "block";
+    document.getElementById("brand").style.display = "none";
+    document.getElementById("model").style.display = "none";
+  }
+
+  function showByBrand() {
+    document.getElementById("budget").style.display = "none";
+    document.getElementById("vehicleType").style.display = "none";
+    document.getElementById("brand").style.display = "block";
+    document.getElementById("model").style.display = "block";
+  }
+
+  function searchCars() {
+
+    let budget = document.getElementById("budget").value;
+    let vehicle = document.getElementById("vehicleType").value;
+    let brand = document.getElementById("brand").value;
+    let model = document.getElementById("model").value;
+
+    let url = "search-results.php?";
+    url += "type=" + carCondition;
+
+    if (budget && budget !== "Select Budget") {
+      url += "&budget=" + encodeURIComponent(budget);
+    }
+
+    if (vehicle && vehicle !== "All Vehicle Types") {
+      url += "&vehicle=" + encodeURIComponent(vehicle);
+    }
+
+    if (brand) {
+      url += "&brand=" + brand;
+    }
+
+    if (model && model !== "Select Model") {
+      url += "&model=" + model;
+    }
+
+    window.location.href = url;
+  }
+</script>
+
 <?php
-include 'include/footer.php'; 
+include 'include/footer.php';
 ?>

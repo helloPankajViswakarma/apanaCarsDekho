@@ -38,27 +38,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $rating = $_POST['rating'];
     $amount = $_POST['amount'];
     $model = $_POST['model'];
+$brand = $_POST['brand'];
+$fuel_type = $_POST['fuel_type'];
 
     // Images
     $image = uploadImage($_FILES['image']);
     $image1 = uploadImage($_FILES['image1']);
 
     // Insert
-    $stmt = $conn->prepare(
-        "INSERT INTO cars (car_name, description, rating, amount, model, image, image1)
-         VALUES (?, ?, ?, ?, ?, ?, ?)"
-    );
+$stmt = $conn->prepare(
+    "INSERT INTO cars 
+    (car_name, description, rating, amount, model, brand, fuel_type, image, image1)
+    VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)"
+);
 
-    $stmt->bind_param(
-        "ssdisss",
-        $car_name,
-        $description,
-        $rating,
-        $amount,
-        $model,
-        $image,
-        $image1
-    );
+$stmt->bind_param(
+    "ssdisssss",
+    $car_name,
+    $description,
+    $rating,
+    $amount,
+    $model,
+    $brand,
+    $fuel_type,
+    $image,
+    $image1
+);
 
     $stmt->execute();
     $stmt->close();
@@ -119,6 +124,42 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                                 <input type="text" name="model" required>
                             </div>
                         </div>
+
+                        <div class="time-row">
+
+                            <div class="time-row">
+
+                                <div class="time-field">
+                                    <label>Fuel Type</label>
+                                    <select name="fuel_type" required>
+                                        <option value="">Select Fuel Type</option>
+                                        <option value="Electric">Electric</option>
+                                        <option value="Petrol">Petrol</option>
+                                        <option value="Diesel">Diesel</option>
+                                        <option value="CNG">CNG</option>
+                                    </select>
+                                </div>
+
+                                <div class="time-field">
+                                    <label>Car Brand</label>
+                                    <select name="brand" required>
+                                        <option value="">Select Brand</option>
+                                        <option value="Tata">Tata</option>
+                                        <option value="Mahindra">Mahindra</option>
+                                        <option value="Maruti">Maruti Suzuki</option>
+                                        <option value="Kia">Kia</option>
+                                        <option value="Hyundai">Hyundai</option>
+                                    </select>
+                                </div>
+
+                            </div>
+
+
+
+                        </div>
+
+
+
 
                         <div class="time-row">
                             <div class="time-field">

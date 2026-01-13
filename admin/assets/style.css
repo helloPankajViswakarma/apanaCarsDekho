@@ -160,11 +160,7 @@ body.dashboard-page {
     font-weight: 600;
 }
 
-.nav-links {
-    /* margin-top: 30px; */
-    padding: 18px;
-    list-style: none;
-}
+/*  */
 .nav-links li {
   margin-bottom: 12px;
 }
@@ -455,3 +451,96 @@ input[type="file"]::file-selector-button {
   }
 }
 
+.car-detailes {
+    background: #fff;
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    padding: 20px;
+    border-radius: 10px;
+    align-items: center;
+}
+
+.car-details img {
+  width: 420px;
+  border-radius: 10px;
+}
+
+.right h1 {
+  margin: 0;
+}
+
+.rating {
+  color: #ff9800;
+  margin: 5px 0;
+}
+
+.rating span {
+  color: #777;
+}
+
+.desc {
+  color: #555;
+  margin: 10px 0;
+}
+
+.price {
+  font-size: 22px;
+  font-weight: bold;
+  margin: 15px 0;
+}
+
+.price span {
+  display: block;
+  font-size: 13px;
+  color: #777;
+}
+
+.offer-btn {
+  background: #ff5722;
+  color: #fff;
+  border: none;
+  padding: 12px 25px;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.specs {
+    background: #fff;
+    margin-top: 20px;
+    padding: 20px 155px;
+    border-radius: 10px;
+}
+
+.spec-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 15px;
+}
+
+.spec-grid div {
+  background: #f9f9f9;
+  padding: 12px;
+  border-radius: 6px;
+}
+
+.emi-box {
+  background: #fff;
+  margin-top: 20px;
+  padding: 20px;
+  border-radius: 10px;
+  width: 300px;
+}
+
+.emi-box h2 {
+  color: #ff5722;
+}
+
+.emi-btn {
+  background: #ff5722;
+  color: white;
+  border: none;
+  padding: 10px;
+  width: 100%;
+  border-radius: 5px;
+}

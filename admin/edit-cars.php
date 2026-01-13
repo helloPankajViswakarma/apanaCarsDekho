@@ -1,5 +1,6 @@
 <?php
 session_start();
+
 if (!isset($_SESSION['admin_logged_in'])) {
     header("Location: login.php");
     exit();
@@ -7,28 +8,32 @@ if (!isset($_SESSION['admin_logged_in'])) {
 
 include "db.php";
 
-// Check ID
-if (!isset($_GET['id'])) {
+// Validate ID
+if (!isset($_GET['id']) || !is_numeric($_GET['id'])) {
     header("Location: view-cars.php");
     exit();
 }
 
-$id = (int)$_GET['id'];
+$id = (int) $_GET['id'];
 
 // Fetch car
-$result = mysqli_query($conn, "SELECT * FROM cars WHERE id = $id");
-if (mysqli_num_rows($result) == 0) {
+$stmt = $conn->prepare("SELECT * FROM cars WHERE id = ?");
+$stmt->bind_param("i", $id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+if ($result->num_rows === 0) {
     echo "<script>alert('Car not found'); window.location='view-cars.php';</script>";
     exit();
 }
-$car = mysqli_fetch_assoc($result);
+
+$car = $result->fetch_assoc();
+$stmt->close();
 
 // Image upload function
 function uploadImage($file, $oldImage = null)
 {
-    if (empty($file['name'])) {
-        return $oldImage;
-    }
+    if (empty($file['name'])) return $oldImage;
 
     $allowed = ['jpg', 'jpeg', 'png'];
     $ext = strtolower(pathinfo($file['name'], PATHINFO_EXTENSION));
@@ -55,14 +60,14 @@ function uploadImage($file, $oldImage = null)
     return $newName;
 }
 
-// Handle update
+// Update car
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-    $car_name    = $_POST['car_name'];
-    $description = $_POST['description'];
-    $rating      = $_POST['rating'];
-    $amount      = $_POST['amount'];
-    $model       = $_POST['model'];
+    $car_name    = trim($_POST['car_name']);
+    $description = trim($_POST['description']);
+    $rating      = (float) $_POST['rating'];
+    $amount      = (float) $_POST['amount'];
+    $model       = trim($_POST['model']);
 
     $image  = uploadImage($_FILES['image'],  $car['image']);
     $image1 = uploadImage($_FILES['image1'], $car['image1']);
@@ -74,7 +79,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     );
 
     $stmt->bind_param(
-        "ssdisssi",
+        "ssddsssi",
         $car_name,
         $description,
         $rating,
@@ -108,6 +113,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <div class="dashboard-container">
 
 <?php include "include/sidebar.php"; ?>
+
 <main class="main-content">
 <?php include "include/top-header.php"; ?>
 
@@ -125,20 +131,22 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <textarea name="description" required><?= htmlspecialchars($car['description']); ?></textarea>
 
     <label>Rating</label>
-    <input type="number" step="0.1" min="0" max="5" name="rating" value="<?= $car['rating']; ?>" required>
+    <input type="number" step="0.1" min="0" max="5" name="rating"
+           value="<?= htmlspecialchars($car['rating']); ?>" required>
 
     <label>Amount</label>
-    <input type="number" name="amount" value="<?= $car['amount']; ?>" required>
+    <input type="number" step="0.01" name="amount"
+           value="<?= htmlspecialchars($car['amount']); ?>" required>
 
     <label>Model</label>
     <input type="text" name="model" value="<?= htmlspecialchars($car['model']); ?>" required>
 
     <label>Image 1</label><br>
-    <img src="uploads/<?= $car['image']; ?>" width="150"><br><br>
+    <img src="uploads/<?= htmlspecialchars($car['image']); ?>" width="150"><br><br>
     <input type="file" name="image" accept="image/*">
 
     <label>Image 2</label><br>
-    <img src="uploads/<?= $car['image1']; ?>" width="150"><br><br>
+    <img src="uploads/<?= htmlspecialchars($car['image1']); ?>" width="150"><br><br>
     <input type="file" name="image1" accept="image/*">
 
     <input type="submit" value="Update Car">
