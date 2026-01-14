@@ -54,19 +54,19 @@ include "include/header.php";
         <div class="team-cards">
 
             <div class="team-card">
-                <img src="assets/images/user.png">
+                <img src="https://ibb.co/rf7TH3mk">
                 <h4>Pankaj Vishwakarma</h4>
                 <p>Founder & Developer</p>
             </div>
 
             <div class="team-card">
-                <img src="assets/images/user.png">
+                <img src="https://ibb.co/rf7TH3mk">
                 <h4>Rahul Sharma</h4>
                 <p>Marketing Head</p>
             </div>
 
             <div class="team-card">
-                <img src="assets/images/user.png">
+                <img src="https://ibb.co/rf7TH3mk">
                 <h4>Ankit Verma</h4>
                 <p>Product Manager</p>
             </div>

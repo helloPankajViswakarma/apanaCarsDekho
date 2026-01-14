@@ -51,7 +51,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 $mail->send();
 
-                // Redirect to OTP verification page
+
                 header("Location: verify_otp.php?email=" . urlencode($email));
                 exit();
 
@@ -71,14 +71,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <meta charset="UTF-8">
 <title>Register | Auth Project</title>
 <style>
-/* ========== GLOBAL RESET ========== */
+
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* ========== BACKGROUND ========== */
+
 body {
   font-family: 'Poppins', sans-serif;
   background: linear-gradient(135deg, #6a11cb, #2575fc);
@@ -88,7 +88,7 @@ body {
   align-items: center;
 }
 
-/* ========== CONTAINER ========== */
+
 .container {
   background: rgba(255, 255, 255, 0.15);
   backdrop-filter: blur(12px);
@@ -102,7 +102,7 @@ body {
   animation: fadeIn 1s ease-in-out;
 }
 
-/* ========== FORM STYLING ========== */
+
 h2 {
   margin-bottom: 20px;
   font-size: 28px;
@@ -148,7 +148,7 @@ button:hover {
   transform: translateY(-2px);
 }
 
-/* ========== MESSAGE STYLES ========== */
+
 p {
   margin-top: 10px;
   font-size: 14px;
@@ -157,13 +157,13 @@ p {
 p.error { color: #ffbaba; }
 p.success { color: #baffba; }
 
-/* ========== ANIMATION ========== */
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-30px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* ========== RESPONSIVE ========== */
+
 @media (max-width: 480px) {
   .container {
     width: 90%;

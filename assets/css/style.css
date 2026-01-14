@@ -480,11 +480,14 @@
 .car-cards {
     background: #fff;
     border-radius: 10px;
-    display: flex;
+    /* display: flex; */
     padding: 15px;
     gap: 20px;
+    display: flex;
+    justify-content: center;
     border: 1px solid;
     margin-bottom: 20px;
+    align-items: center;
 }
 .filter-1 {
     border: 1px solid;

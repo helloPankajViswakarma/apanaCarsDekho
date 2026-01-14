@@ -12,9 +12,14 @@ $sort = $_GET['sort'] ?? '';
 /* -------- QUERY -------- */
 $sql = "SELECT * FROM cars WHERE 1";
 
-/* Budget Filter */
 if ($budget == "10-15") {
     $sql .= " AND amount BETWEEN 1000000 AND 1500000";
+} elseif ($budget == "15-20") {
+    $sql .= " AND amount BETWEEN 1500000 AND 2000000";
+} elseif ($budget == "20-25") {
+    $sql .= " AND amount BETWEEN 2000000 AND 2500000";
+} elseif ($budget == "25-30") {
+    $sql .= " AND amount BETWEEN 2500000 AND 3000000";
 }
 
 /* Brand Filter */
@@ -34,6 +39,8 @@ if (!empty($transmission)) {
     $transList = "'" . implode("','", $transmission) . "'";
     $sql .= " AND transmission IN ($transList)";
 }
+
+
 
 /* Sorting */
 if ($sort == "low") {
@@ -63,23 +70,26 @@ $result = mysqli_query($conn, $sql);
         <form method="GET" class="filter">
 
             <div class="filter-1">
-                <h3>Budget</h3>
-                <ul>
-                    <li>
-                        <input type="radio" name="budget" value="10-15" <?= ($budget == "10-15") ? "checked" : "" ?>> 10 -
-                        15 Lakh
-                    </li>
-                     <li>
-                        <input type="radio" name="budget" value="10-15" <?= ($budget == "15-20") ? "checked" : "" ?>> 15 -20 Lakh
-                    </li>
-                     <li>
-                        <input type="radio" name="budget" value="10-15" <?= ($budget == "20-5") ? "checked" : "" ?>> 20 -25 Lakh
-                    </li>
+               <h3>Budget</h3>
+<ul>
+    <li>
+        <input type="radio" name="budget" value="10-15" <?= ($budget=="10-15")?"checked":"" ?>>
+        10 - 15 Lakh
+    </li>
+    <li>
+        <input type="radio" name="budget" value="15-20" <?= ($budget=="15-20")?"checked":"" ?>>
+        15 - 20 Lakh
+    </li>
+    <li>
+        <input type="radio" name="budget" value="20-25" <?= ($budget=="20-25")?"checked":"" ?>>
+        20 - 25 Lakh
+    </li>
+    <li>
+        <input type="radio" name="budget" value="25-30" <?= ($budget=="25-30")?"checked":"" ?>>
+        25 - 30 Lakh
+    </li>
+</ul>
 
-                     <li>
-                        <input type="radio" name="budget" value="10-15" <?= ($budget == "10-15") ? "checked" : "" ?>> 25 -35 Lakh        </li>
-                    
-                </ul>
             </div>
 
             <hr>
@@ -144,30 +154,47 @@ $result = mysqli_query($conn, $sql);
             </div>
 
             <!-- CAR CARDS -->
-            <?php while ($row = mysqli_fetch_assoc($result)) { ?>
-                <div class="car-cards">
+           <?php while ($row = mysqli_fetch_assoc($result)) { ?>
+    <div class="car-cards">
 
-                    <!-- <img src="admin/uploads/<?= $row['image']  ?> style='width:50px; heigth:500px'  "> -->
-<img src="admin/uploads/<?= $row['image']; ?>" style="width:340px; height:340px;">
+        <img src="admin/uploads/<?= $row['image']; ?>" width="340" height="340">
 
-                    <div class="car-info">
-                        <h3><?= $row['car_name'] ?></h3>
+        <div class="car-info">
+            <h3><?= $row['car_name']; ?></h3>
 
-                        <p class="rating">⭐ <?= $row['rating'] ?></p>
+            <!-- MODEL -->
+            <p class="model">
+                Model: <strong><?= $row['model']; ?></strong>
+            </p>
 
-                        <p class="price">₹<?= number_format($row['amount']) ?>*</p>
+            <!-- RATING -->
+            <p class="rating">
+                ⭐ <?= $row['rating']; ?> / 5
+            </p>
 
-                        <p class="specs">
-                            <?= $row['vehicle_type'] ?> • <?= $row['transmission'] ?>
-                        </p>
+            <!-- DESCRIPTION -->
+            <p class="description">
+                <?= substr($row['description'], 0, 120); ?>...
+            </p>
 
-                        <a href="cars-details.php?id=<?= $row['id'] ?>">
-                            <button class="offer-btn">View Offers</button>
-                        </a>
-                    </div>
+            <!-- PRICE -->
+            <p class="price">
+                ₹<?= number_format($row['amount']); ?>*
+            </p>
 
-                </div>
-            <?php } ?>
+            <!-- SPECS -->
+            <p class="specs">
+                <?= $row['vehicle_type']; ?> • <?= $row['transmission']; ?>
+            </p>
+
+            <a href="cars-details.php?id=<?= $row['id']; ?>">
+                <button class="offer-btn">View Offers</button>
+            </a>
+        </div>
+
+    </div>
+<?php } ?>
+
 
         </div>
     </div>
